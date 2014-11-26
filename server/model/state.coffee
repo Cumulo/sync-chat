@@ -1,24 +1,38 @@
 
 # in-memory
 database =
-  # in pairs of userId->previewData
+  # in pairs of socketId->previewData
   store: {}
   changed: no
 
-exports.update = (userId, data) ->
+exports.create = (socketId, data) ->
   {store} = database
-  unless store[userId]?
-    state = store[userId] = {}
+  if store[socketId]?
+    @update socketId, data
+  else
+    store[socketId] = data
+
+exports.clearWithSocketId = (socketId) ->
+  store[threadId] = null
+  database.changed = yes
+
+exports.update = (socketId, data) ->
+  {store} = database
+  unless store[socketId]?
+    state = store[socketId] = {}
   for key, value of data
     state[key] = value
   database.changed = yes
 
-exports.withThreadId = (userId, threadId) ->
+exports.withThreadId = (threadId) ->
   states = []
-  for userId, state of data.store
+  for userId, state of database.store
     if state.threadId is threadId
       states.push state
   states
+
+exports.withSocketId = (socketId) ->
+  database.store[socketId]
 
 exports.newTick = ->
   database.changed = no

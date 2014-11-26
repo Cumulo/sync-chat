@@ -1,21 +1,31 @@
 
 server = require 'ws-json-server'
+shortid = require 'shortid'
+
+store = require './controller/store'
+state = require './controller/state'
+account = require './controller/account'
+
+client = require './view/'
 
 server.listen 3000, (ws) ->
 
+  socketId = shortid.generate()
+
   # login before one can access
-  ws.on 'auth', (msg) ->
-    auth.handle
+  ws.on 'account', (msg) ->
+    account.handle socketId, msg
 
   # operations on store
   ws.on 'store', (msg) ->
     store.handle msg
 
   # syncs user state to server
-  ws.on 'state', ->
+  ws.on 'state', (msg) ->
+    state.handle msg
 
   # report thing of
-  ws.on 'report', ->
+  ws.on 'report', (msg) ->
+    report.handle msg
 
   # send whole user state
-  ws.emit 'sync', ->
