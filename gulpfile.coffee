@@ -6,7 +6,6 @@ dev = yes
 libraries = [
   'react'
   'shortid'
-  'ws-json-browser'
 ]
 
 gulp.task 'folder', ->

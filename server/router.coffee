@@ -1,32 +1,36 @@
 
-server = require 'ws-json-server'
-shortid = require 'shortid'
+lodash = require 'lodash'
+# store
+message = require './store/message'
+account = require './store/account'
+profile = require './store/profile'
+# state is special to be operated directly
+states = require './store/states'
 
-store = require './controller/store'
-state = require './model/state'
-account = require './controller/account'
+exports.handle = (sid, data) ->
+  switch data.scope
+    # user account
+    when 'account' then switch data.action
+      when 'signup'   then account.signup   sid, data
+      when 'login'    then account.login    sid, data
+      when 'change'   then account.change   sid, data
+      else console.warn 'not handled in account', data
+    # message
+    when 'message' then switch data.action
+      when 'create'     then message.create       sid, data
+      when 'setThread'  then message.setThread    sid, data
+      else console.warn 'not handled in message', data
+    # profile
+    when 'profile' then switch data.action
+      when 'avatar'     then profile.avatar     sid, data
+      when 'nickname'   then profile.nickname   sid, data
+      else console.warn 'not handled in profile', data
+    # states that are not in db
+    when 'state'
+      state = states[sid]
+      lodash.merge state, data
+      state.changed = yes
+    else console.warn 'not handled in router', data
 
-client = require './view/'
-
-server.listen 3000, (ws) ->
-
-  socketId = shortid.generate()
-
-  # login before one can access
-  ws.on 'account', (msg) ->
-    account.handle socketId, msg
-
-  # operations on store
-  ws.on 'store', (msg) ->
-    store.handle msg
-
-  # syncs user state to server
-  ws.on 'state', (msg) ->
-    # states are special, clients update them directly
-    state.handle socketId, msg
-
-  # report thing of
-  ws.on 'report', (msg) ->
-    report.handle msg
-
-  # send whole user state
+# above are the scope allowed from clients
+# also might be a special one reporting errors
