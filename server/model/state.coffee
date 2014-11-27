@@ -3,20 +3,10 @@
 database =
   # in pairs of socketId->previewData
   store: {}
+  sockets: {}
   changed: no
 
-exports.create = (socketId, data) ->
-  {store} = database
-  if store[socketId]?
-    @update socketId, data
-  else
-    store[socketId] = data
-
-exports.clearWithSocketId = (socketId) ->
-  store[threadId] = null
-  database.changed = yes
-
-exports.update = (socketId, data) ->
+exports.handle = (socketId, data) ->
   {store} = database
   unless store[socketId]?
     state = store[socketId] = {}
@@ -24,15 +14,11 @@ exports.update = (socketId, data) ->
     state[key] = value
   database.changed = yes
 
-exports.withThreadId = (threadId) ->
-  states = []
-  for userId, state of database.store
-    if state.threadId is threadId
-      states.push state
-  states
-
-exports.withSocketId = (socketId) ->
-  database.store[socketId]
+exports.markChanged = ->
+  database.changed = yes
 
 exports.newTick = ->
   database.changed = no
+
+exports.getStore = ->
+  database

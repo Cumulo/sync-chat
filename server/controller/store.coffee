@@ -1,23 +1,36 @@
 
+# model
 state = require '../model/state'
-message = require '../model/message'
-userModel = require '../model/user'
+database = require '../model/database'
+# utils
+time = require '../util/time'
+curd = require '../util/curd'
 
 router =
   create: (msg, socketId) ->
-    userState = state.withSocketId socketId
-    message.create msg.content, userState.thread, userState.userId
+    userState = database.state[socketId]
+    msg =
+      userId: userId.user.id
+      content: msg.content
+      thread: userState.thread
+      time: time.now()
+      isThread: no
+    database.message.unshift msg
+    database.markChanged()
 
   setThread: (msg, socketId) ->
-    message.setThread msg.messageId
+    curd.updateOneById database.messages, msg.id, isThread: yes
+    database.markChanged()
 
   setAvatar: (msg, socketId) ->
-    user = (state.withSocketId socketId).user
-    userModel.updateUser user.id, avatar: msg.avatar
+    user = database.state[socketId].user
+    curd.updateOneById database.users, user.id, avatar: msg.avatar
+    database.markChanged()
 
   setNickname: (msg, socketId) ->
-    user = (state.withSocketId socketId).user
-    userModel.updateUser user.id, nickname: msg.nickname
+    user = database.state[socketId].user
+    curd.updateOneById database.users, user.id, nickname: msg.nickname
+    database.markChanged()
 
 exports.handle = (msg, socketId) ->
   action = router[msg.action]

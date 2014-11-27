@@ -34,6 +34,7 @@
   "description": "A chat app",
   "dependencies": {
     "jiff": "^0.6.0",
+    "prelude-ls": "^1.1.1",
     "shortid": "^2.1.3",
     "ws-json-server": "0.0.7"
   },

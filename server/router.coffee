@@ -3,7 +3,7 @@ server = require 'ws-json-server'
 shortid = require 'shortid'
 
 store = require './controller/store'
-state = require './controller/state'
+state = require './model/state'
 account = require './controller/account'
 
 client = require './view/'
@@ -22,7 +22,8 @@ server.listen 3000, (ws) ->
 
   # syncs user state to server
   ws.on 'state', (msg) ->
-    state.handle msg
+    # states are special, clients update them directly
+    state.handle socketId, msg
 
   # report thing of
   ws.on 'report', (msg) ->
