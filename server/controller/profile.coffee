@@ -1,7 +1,7 @@
 
-# store
-states = require '../store/states'
-db = require '../store/db'
+# model
+states = require '../model/states'
+db = require '../model/db'
 # util
 curd = require '../util/curd'
 

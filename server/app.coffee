@@ -2,7 +2,10 @@
 Server = require('ws').Server
 shortid = require 'shortid'
 
-states = require './store/states'
+# model
+states = require './model/states'
+whispers = require './model/whispers'
+# interface
 router = require './router'
 sender = require './sender'
 
@@ -13,6 +16,7 @@ wss.on 'connection', (ws) ->
   # sid refers to socket-id used all over the app
   sid = shortid.generate()
   states[sid] = {}
+  whispers[sid] = {}
 
   # so sender can send messages directly
   sender.register sid, ws

@@ -1,8 +1,8 @@
 
 shortid = require 'shortid'
 # model
-states = require '../store/states'
-db = require '../store/db'
+states = require '../model/states'
+db = require '../model/db'
 # utils
 time = require '../util/time'
 curd = require '../util/curd'

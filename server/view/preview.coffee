@@ -2,8 +2,8 @@
 lodash = require 'lodash'
 prelude = require 'prelude-ls'
 jiff = require 'jiff'
-# store
-states = require './store/states'
+# model
+states = require './model/states'
 # util
 time = require './util/time'
 # browser
@@ -13,15 +13,6 @@ collection =
   previews: {}
 
   render: ->
-    byThread = (msg) -> msg.thread
-    getPreview = (state) -> state.preview
-    byTime = (preview) -> new Date preview.time
-    # preview is like {thread, time, text, sid}
-    data = prelude.groupBy byThread,
-      lodash.map states, getPreview
-    for thread, list of data
-      data[thread] = prelude.sortBy byTime
-    @previews = data
 
 time.interval 400, ->
   isChanged = (sid, state) -> state?.changed

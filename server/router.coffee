@@ -1,11 +1,12 @@
 
-lodash = require 'lodash'
-# store
-message = require './store/message'
-account = require './store/account'
-profile = require './store/profile'
+# controller
+message = require './controller/message'
+account = require './controller/account'
+profile = require './controller/profile'
+alter = require './controller/alter'
+hear = require './controller/hear'
 # state is special to be operated directly
-states = require './store/states'
+states = require './model/states'
 
 exports.handle = (sid, data) ->
   switch data.scope
@@ -26,10 +27,15 @@ exports.handle = (sid, data) ->
       when 'nickname'   then profile.nickname   sid, data
       else console.warn 'not handled in profile', data
     # states that are not in db
-    when 'state'
-      state = states[sid]
-      lodash.merge state, data
-      state.changed = yes
+    when 'state' then switch data.action
+      when 'update'       then alter.merge sid, data
+      when 'moreMessage'  then alter.moreMessage sid, data
+      when 'moreThread'   then alter.moreThread sid, data
+      else console.warn 'not handled in alter', data
+    # preview whispers
+    when 'whisper' then switch data.action
+      when 'preview'  then hear.preview sid, data
+      else console.warn 'not handled in whisper', data
     else console.warn 'not handled in router', data
 
 # above are the scope allowed from clients

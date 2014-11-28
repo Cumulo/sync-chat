@@ -1,10 +1,11 @@
 
 shortid = require 'shortid'
+lodash = require 'lodash'
 # sockets to send infos directly
 sender = require '../sender'
-# store
-state = require '../store/state'
-db = require '../store/db'
+# model
+state = require '../model/state'
+db = require '../model/db'
 # util
 curd = require '../util/curd'
 
@@ -15,6 +16,7 @@ exports.signup = (sid, data) ->
   if db.auth[name]?
     sender.error sid, 'username it taken'
     return
+  state = states[sid]
   db.auth[name] = password
   user =
     name: data.name
@@ -23,7 +25,8 @@ exports.signup = (sid, data) ->
     id: shortid.generate()
     online: yes
   db.users.unshift user
-  states[sid].user = user
+  state.user = user
+  states[sid].changed
   db.changed = yes
 
 exports.login = (sid, data) ->
@@ -36,13 +39,14 @@ exports.login = (sid, data) ->
   matchName = (data) -> data.name is data.name
   user = prelude.find matchName, db.auth
   user.online = yes
-  states[sid].user = user
+  lodash.merge state, {user, changed: yes}
   data.changed = yes
 
 exports.logout = (sid, data) ->
-  user = states[sid].user
+  state = states[sid]
+  {user} = state
   curd.updateOneById db.users, user.id, online: no
-  states[sid].user = null
+  lodash.merge state user: null, changed: yes
 
 exports.change = (sid, data) ->
   unless db.auth[data.name]?
