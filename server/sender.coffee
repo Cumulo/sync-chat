@@ -28,9 +28,25 @@ exports.ok = (sid, data) ->
   @info sid, data
 
 exports.patchStore = (sid, data) ->
+  @emit
+    scope: 'store'
+    action: 'patch'
+    data: data
 
 exports.patchPreview = (sid, data) ->
+  @emit
+    scope: 'preview'
+    action: 'patch'
+    data: data
 
 exports.syncStore = (sid, msg) ->
+  @emit
+    scope: 'store'
+    action: 'sync'
+    data: data
 
 exports.syncPreview = (sid, data) ->
+  @emit
+    scope: 'preview'
+    action: 'sync'
+    data: data

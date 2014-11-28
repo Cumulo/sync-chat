@@ -1,2 +1,0 @@
-
-world = require('./world').get()
