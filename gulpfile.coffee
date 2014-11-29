@@ -1,7 +1,7 @@
 
 gulp = require 'gulp'
 
-project = 'workflow'
+project = 'sync-chat'
 dev = yes
 libraries = [
   'react'

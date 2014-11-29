@@ -13,6 +13,7 @@ render = (sid) ->
   state = states[sid]
   threadLen = state.threadPage * state.pageStep
   messageLen = state.messagePage * state.pageStep
+  user: state.user
   threads: world.threads[...threadLen]
   messages: world.messages[sid][...messageLen]
 

@@ -2,7 +2,7 @@ doctype
 
 html
   head
-    title "Workflow"
+    title "Sync Chat"
     meta (:charset utf-8)
     script(:src build/vendor.min.js)
     @if (@ dev)

@@ -8,6 +8,9 @@ whispers = require './model/whispers'
 # interface
 router = require './router'
 sender = require './sender'
+# view
+clients = require './view/clients'
+preview = require './view/preview'
 
 wss = new Server port: 3000
 
@@ -30,3 +33,7 @@ wss.on 'connection', (ws) ->
   ws.on 'messages', (raw) ->
     data = JSON.parse raw
     router.handle sid, data
+
+  # initialize data
+  clients.syncStore()
+  clients.syncPreview()
