@@ -15,8 +15,11 @@ wss.on 'connection', (ws) ->
   # initialize profile
   # sid refers to socket-id used all over the app
   sid = shortid.generate()
-  states[sid] = {}
-  whispers[sid] = {}
+  states[sid] =
+    threadPage: 1
+    messagePage: 1
+    pageStep: 10
+  whispers.typing[sid] = {}
 
   # so sender can send messages directly
   sender.register sid, ws

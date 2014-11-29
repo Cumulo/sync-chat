@@ -3,29 +3,24 @@ lodash = require 'lodash'
 prelude = require 'prelude-ls'
 jiff = require 'jiff'
 # model
-states = require './model/states'
+states = require '../model/states'
 # util
-time = require './util/time'
-# browser
+time = require '../util/time'
+# browser interface
 sender = require '../sender'
+# scene
+whispers = require('../scene/whispers').get()
 
-collection =
-  previews: {}
+render = (sid) ->
+  whispers[sid]
 
-  render: ->
-
-time.interval 400, ->
-  isChanged = (sid, state) -> state?.changed
-  unless lodash.some states, isChanged
-    return
-  collection.render()
-  for sid, state of states
-    data = collection.previews[thread]
-    sender.patchPreview (jiff state.cachePreview, data)
+exports.patchClient = (sid) ->
+  state = states[sid]
+  diff = jiff state.cachePreview, data
+  if diff?
+    data = render sid
     state.cachePreview = data
+    sender.patchPreview diff
 
 exports.syncClient = (sid) ->
-  state = states[sid]
-  data = collection.previews[thread]
-  sender.syncPreview data
-  state.cachePreview = data
+  sender.syncPreview states[sid].cachePreview

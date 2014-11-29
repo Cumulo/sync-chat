@@ -29,8 +29,6 @@ exports.handle = (sid, data) ->
     # states that are not in db
     when 'state' then switch data.action
       when 'update'       then alter.merge sid, data
-      when 'moreMessage'  then alter.moreMessage sid, data
-      when 'moreThread'   then alter.moreThread sid, data
       else console.warn 'not handled in alter', data
     # preview whispers
     when 'whisper' then switch data.action

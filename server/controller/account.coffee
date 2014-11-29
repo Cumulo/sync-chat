@@ -4,7 +4,7 @@ lodash = require 'lodash'
 # sockets to send infos directly
 sender = require '../sender'
 # model
-state = require '../model/state'
+state = require '../model/states'
 db = require '../model/db'
 # util
 curd = require '../util/curd'

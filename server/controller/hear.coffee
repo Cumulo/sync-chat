@@ -3,11 +3,11 @@
 whispers = require '../model/whispers'
 states = require '../model/states'
 
-exports.preview (sid, data) ->
+exports.preview = (sid, data) ->
   state = states[sid]
   thread = state.thread
   userId = state.user.id
-  whispers[sid] =
+  whispers.typing[sid] =
     thread: thread
     userId: userId
     text: data.text

@@ -1,3 +1,5 @@
 
 # just an object for sharing data
-module.exports = whispers = {}
+module.exports = whispers =
+  typing: {}
+  changed: no

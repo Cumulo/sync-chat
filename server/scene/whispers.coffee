@@ -1,25 +1,33 @@
 
-prelude = require 'prelude-js'
+prelude = require 'prelude-ls'
 lodash = require 'lodash'
 # model
 whispers = require '../model/whispers'
 # util
 time = require '../util/time'
+# view
+preview = require '../view/preview'
+
+world = {}
 
 render = ->
   byThread = (msg) -> msg.thread
   getText = (whisper) -> whisper.text
-  byTime = (preview) -> new Date preview.time
+  byTime = (p) -> new Date p.time
   # preview is like {thread, time, text, sid}
   data = prelude.groupBy byThread,
-    lodash.map whispers, getPreview
+    lodash.map whispers, getText
   for thread, list of data
     data[thread] = prelude.sortBy byTime
-  @previews = data
+  world = data
 
 time.interval 400, ->
-  isChanged = (sid, whisper) -> whisper.changed
-  clearChange = (sid, whisper) -> whisper.changed = no
-  if lodash.some whispers, isChanged
-    render()
-    lodash.each whispers, clearChange
+  unless whispers.changed
+    return
+  render()
+  whispers.changed = no
+  for sid, state of states
+    preview.patchClient sid
+
+exports.get = ->
+  world
