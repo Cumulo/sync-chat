@@ -30,7 +30,7 @@ wss.on 'connection', (ws) ->
     sender.unregister sid
 
   # decode data from messages
-  ws.on 'messages', (raw) ->
+  ws.on 'message', (raw) ->
     data = JSON.parse raw
     router.handle sid, data
 

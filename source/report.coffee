@@ -7,7 +7,7 @@ exports.register = (ws) ->
 
 exports.emit = (data) ->
   raw = JSON.stringify data
-  ws.send raw
+  local.ws.send raw
 
 exports.syncStore = ->
   data =
@@ -19,4 +19,12 @@ exports.syncPreview = ->
   data =
     scope: 'preview'
     action: 'sync'
+  @emit data
+
+exports.login = (name, password) ->
+  data =
+    scope: 'account'
+    action: 'login'
+    name: name
+    password: password
   @emit data

@@ -3,7 +3,6 @@ React = require 'react'
 
 AppLogin = require './login'
 AppSignup = require './signup'
-ChangePassword = require './change-password'
 
 $ = React.DOM
 
@@ -11,7 +10,7 @@ module.exports = React.createFactory React.createClass
   displayName: 'account-action'
 
   getInitialState: ->
-    tab: 'login' # signup, change
+    tab: 'login' # signup
 
   onLoginClick: ->
     @setState tab: 'login'
@@ -19,16 +18,12 @@ module.exports = React.createFactory React.createClass
   onSignupClick: ->
     @setState tab: 'signup'
 
-  onChangeClick: ->
-    @setState tab: 'change'
-
   render: ->
 
     $.div className: 'account-action',
-      $.div className: 'tabs',
-        $.span className: 'login', onClick: @onLoginClick, '登录'
-        $.span className: 'signup', onClick: @onSignupClick, '注册'
-        $.span className: 'change', onClick: @onChangeClick, '修改密码'
+      $.div className: 'tabs line',
+        $.span className: 'login tab', onClick: @onLoginClick, '登录'
+        $.span className: 'signup tab', onClick: @onSignupClick, '注册'
       switch @state.tab
         when 'login' then AppLogin()
         when 'signup' then AppSignup()

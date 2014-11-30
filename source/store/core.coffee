@@ -22,4 +22,4 @@ exports.sync = (data) ->
   exports.trigger()
 
 exports.get = ->
-  store
+  store or null

@@ -4,6 +4,7 @@
   background: #5677fc;
   color: white;
   cursor: pointer;
+  display: inline-block;
 }
 
 .button:hover {

@@ -23,8 +23,10 @@ exports.info = (sid, data) ->
   data.id = shortid.generate()
   @emit sid, data
 
-exports.error = (sid, data) ->
-  data.type = 'error'
+exports.error = (sid, text) ->
+  data =
+    type: 'error'
+    text: text
   @info sid, data
 
 exports.ok = (sid, data) ->
@@ -47,10 +49,10 @@ exports.syncStore = (sid, data) ->
   @emit sid,
     scope: 'store'
     action: 'sync'
-    data: data
+    data: data or null
 
 exports.syncPreview = (sid, data) ->
   @emit sid,
     scope: 'preview'
     action: 'sync'
-    data: data
+    data: data or null

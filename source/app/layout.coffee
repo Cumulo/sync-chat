@@ -4,11 +4,11 @@ React = require 'react'
 $ = React.DOM
 
 # components
-AppLogin = require './login'
 ThreadList = require './thread-list'
 MessageList = require './message-list'
 ActionBar = require './action-bar'
 TipManager = require './tip-manager'
+AccountAction = require './account-action'
 
 module.exports = React.createFactory React.createClass
   displayName: 'app-layout'
@@ -18,7 +18,7 @@ module.exports = React.createFactory React.createClass
 
   renderLogin: ->
     $.div className: 'guest-page',
-      AppLogin()
+      AccountAction()
 
   renderMessage: ->
     $.div className: 'main-page',

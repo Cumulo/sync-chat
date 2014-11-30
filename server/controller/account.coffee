@@ -31,10 +31,10 @@ exports.signup = (sid, data) ->
 
 exports.login = (sid, data) ->
   unless db.auth[data.name]?
-    sender.emit sid, 'no such user'
+    sender.error sid, 'no such user'
     return
   unless db.auth[data.name] is data.password
-    sender.emit sid, 'wrong password'
+    sender.error sid, 'wrong password'
     return
   matchName = (data) -> data.name is data.name
   user = prelude.find matchName, db.auth
