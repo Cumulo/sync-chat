@@ -1,10 +1,11 @@
 
+React = require 'react'
 # server interface
 deliver = require './deliver'
 report = require './report'
 
+# start websocket
 ws = new WebSocket 'ws://localhost:3000'
-
 report.register ws
 
 ws.onmessage = (raw) ->

@@ -1,4 +1,6 @@
 
+shortid = require 'shortid'
+
 collections = {}
 
 exports.register = (sid, ws) ->
@@ -11,12 +13,14 @@ exports.unregister = (sid) ->
 exports.emit = (sid, data) ->
   ws = collections[sid]
   if ws?
-  then ws.send (JSON.stringify data)
+  then ws.send (JSON.stringify (data or null))
   else console.warn 'no ws for sid:', sid
 
 # actions
 
 exports.info = (sid, data) ->
+  data.scope = 'info'
+  data.id = shortid.generate()
   @emit sid, data
 
 exports.error = (sid, data) ->
@@ -28,25 +32,25 @@ exports.ok = (sid, data) ->
   @info sid, data
 
 exports.patchStore = (sid, data) ->
-  @emit
+  @emit sid,
     scope: 'store'
     action: 'patch'
     data: data
 
 exports.patchPreview = (sid, data) ->
-  @emit
+  @emit sid,
     scope: 'preview'
     action: 'patch'
     data: data
 
-exports.syncStore = (sid, msg) ->
-  @emit
+exports.syncStore = (sid, data) ->
+  @emit sid,
     scope: 'store'
     action: 'sync'
     data: data
 
 exports.syncPreview = (sid, data) ->
-  @emit
+  @emit sid,
     scope: 'preview'
     action: 'sync'
     data: data

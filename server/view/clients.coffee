@@ -17,14 +17,14 @@ render = (sid) ->
   threads: world.threads[...threadLen]
   messages: world.messages[sid][...messageLen]
 
-exports.patchClient = (sid) ->
+exports.patch = (sid) ->
   state = states[sid]
   data = render sid
   diff = jiff state.cacheStore, data
   if diff
     @state.cacheStore = data
-    sender.patchStore diff
+    sender.patchStore sid, diff
 
-exports.syncClient = (sid) ->
+exports.sync = (sid) ->
   state = states[sid]
-  sender.syncStore state.cacheStore
+  sender.syncStore sid, state.cacheStore

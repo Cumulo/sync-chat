@@ -1,0 +1,11 @@
+
+.app-layout {}
+
+.app-layout .guest-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}

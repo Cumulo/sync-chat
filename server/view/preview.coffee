@@ -14,13 +14,13 @@ whispers = require('../scene/whispers').get()
 render = (sid) ->
   whispers[sid]
 
-exports.patchClient = (sid) ->
+exports.patch = (sid) ->
   state = states[sid]
   diff = jiff state.cachePreview, data
   if diff?
     data = render sid
     state.cachePreview = data
-    sender.patchPreview diff
+    sender.patchPreview sid, diff
 
-exports.syncClient = (sid) ->
-  sender.syncPreview states[sid].cachePreview
+exports.sync = (sid) ->
+  sender.syncPreview sid, states[sid].cachePreview

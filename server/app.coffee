@@ -35,5 +35,5 @@ wss.on 'connection', (ws) ->
     router.handle sid, data
 
   # initialize data
-  clients.syncStore()
-  clients.syncPreview()
+  clients.sync sid
+  preview.sync sid
