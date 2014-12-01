@@ -1,10 +1,11 @@
 
 shortid = require 'shortid'
 lodash = require 'lodash'
+prelude = require 'prelude-ls'
 # sockets to send infos directly
 sender = require '../sender'
 # model
-state = require '../model/states'
+states = require '../model/states'
 db = require '../model/db'
 # util
 curd = require '../util/curd'
@@ -13,11 +14,10 @@ exports.signup = (sid, data) ->
   if data.name is ''
     sender.error sid, 'name is empty'
     return
-  if db.auth[name]?
+  if db.auth[data.name]?
     sender.error sid, 'username it taken'
     return
-  state = states[sid]
-  db.auth[name] = password
+  db.auth[data.name] = data.password
   user =
     name: data.name
     avatar: ''
@@ -25,8 +25,9 @@ exports.signup = (sid, data) ->
     id: shortid.generate()
     online: yes
   db.users.unshift user
+  state = states[sid]
   state.user = user
-  states[sid].changed
+  state.changed
   db.changed = yes
 
 exports.login = (sid, data) ->
@@ -36,24 +37,26 @@ exports.login = (sid, data) ->
   unless db.auth[data.name] is data.password
     sender.error sid, 'wrong password'
     return
-  matchName = (data) -> data.name is data.name
-  user = prelude.find matchName, db.auth
+  matchName = (user) -> user.name is data.name
+  user = prelude.find matchName, db.users
   user.online = yes
+  state = states[sid]
   lodash.merge state, {user, changed: yes}
-  data.changed = yes
+  db.changed = yes
 
 exports.logout = (sid, data) ->
   state = states[sid]
   {user} = state
   curd.updateOneById db.users, user.id, online: no
   lodash.merge state user: null, changed: yes
+  db.changed = yes
 
 exports.change = (sid, data) ->
   unless db.auth[data.name]?
     sender.error sid, 'no such user'
     return
-  unless db.auth[data.name] is 'password'
+  unless db.auth[data.name] is data.password
     sender.error sid, 'wrong password'
     return
-  db.auth[name] = data.another
+  db.auth[data.name] = data.another
   sender.ok sid, 'info', data: 'done'

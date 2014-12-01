@@ -29,7 +29,7 @@ module.exports = React.createFactory React.createClass
         value: @state.name, placeholder: '用户名'
         onChange: @onNameChange
       $.input
-        className: 'password', type: 'password'
+        className: 'password', type: 'text'
         onChange: @onPasswordChange
         value: @state.password, placeholder: '密码'
       $.div className: 'actions',

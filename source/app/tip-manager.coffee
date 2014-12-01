@@ -1,7 +1,7 @@
 
 React = require 'react'
 
-tips = require '../store/tips'
+tipsStore = require '../store/tips'
 
 ModuleTip = require '../module/tip'
 
@@ -11,18 +11,22 @@ module.exports = React.createFactory React.createClass
   displayName: 'tip-manager'
 
   getInitialState: ->
-    data: tips.get()
+    data: tipsStore.get()
 
   componentDidMount: ->
-    tips.on @onChange
+    tipsStore.on @onChange
 
   componentWillUnmount: ->
-    tips.off @onChange
+    tipsStore.off @onChange
 
   onChange: ->
-    @setState data: tips.get()
+    @setState data: tipsStore.get()
+
+  onTipClick: (id) ->
+    tipsStore.remove id
 
   render: ->
 
-    $.div className: 'tip-manager',
-      ModuleTip
+    $.div className: 'tip-manager paragraph',
+      @state.data.map (tipData) =>
+        ModuleTip key: tipData.id, data: tipData, onClick: @onTipClick

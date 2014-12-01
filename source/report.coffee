@@ -28,3 +28,11 @@ exports.login = (name, password) ->
     name: name
     password: password
   @emit data
+
+exports.signup = (name, password) ->
+  data =
+    scope: 'account'
+    action: 'signup'
+    name: name
+    password: password
+  @emit data

@@ -3,13 +3,16 @@ prelude = require 'prelude-ls'
 lodash = require 'lodash'
 # model
 db = require '../model/db'
+states = require '../model/states'
 # util
 time = require '../util/time'
+# view
+clients = require '../view/clients'
 
 # the structure of all data
 world =
-  topics: [] # just messages
-  threas: {} # by roomId
+  threads: [] # just messages
+  messages: {} # by roomId
 
 render = ->
   isThread = (msg) -> msg.isThread
@@ -20,11 +23,12 @@ render = ->
 time.interval 1000, ->
   unless db.changed
     return
+  console.info 'render world'
   render()
   # unmark change but notify clients the changes
   db.changed = no
   for sid, state of states
-    state?.changed = yes
+    clients.patch sid
 
 exports.get = ->
   world

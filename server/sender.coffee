@@ -13,7 +13,7 @@ exports.unregister = (sid) ->
 exports.emit = (sid, data) ->
   ws = collections[sid]
   if ws?
-  then ws.send (JSON.stringify (data or null))
+  then ws.send (JSON.stringify (data or {}))
   else console.warn 'no ws for sid:', sid
 
 # actions
@@ -37,22 +37,22 @@ exports.patchStore = (sid, data) ->
   @emit sid,
     scope: 'store'
     action: 'patch'
-    data: data
+    data: data or {}
 
 exports.patchPreview = (sid, data) ->
   @emit sid,
     scope: 'preview'
     action: 'patch'
-    data: data
+    data: data or {}
 
 exports.syncStore = (sid, data) ->
   @emit sid,
     scope: 'store'
     action: 'sync'
-    data: data or null
+    data: data or {}
 
 exports.syncPreview = (sid, data) ->
   @emit sid,
     scope: 'preview'
     action: 'sync'
-    data: data or null
+    data: data or {}

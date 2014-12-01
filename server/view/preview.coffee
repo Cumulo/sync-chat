@@ -9,10 +9,10 @@ time = require '../util/time'
 # browser interface
 sender = require '../sender'
 # scene
-whispers = require('../scene/whispers').get()
+whispers = require('../scene/whispers')
 
 render = (sid) ->
-  whispers[sid]
+  whispers.get()[sid]
 
 exports.patch = (sid) ->
   state = states[sid]

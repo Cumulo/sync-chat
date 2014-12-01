@@ -18,6 +18,9 @@ module.exports = React.createFactory React.createClass
   onPasswordChange: (event) ->
     @setState password: event.target.value
 
+  onSubmit: ->
+    report.signup @state.name, @state.password
+
   render: ->
 
     $.div className: 'app-signup',
@@ -30,4 +33,4 @@ module.exports = React.createFactory React.createClass
         onChange: @onPasswordChange
         value: @state.password, placeholder: '密码'
       $.div className: 'actions',
-        $.div className: 'button', onClick: @submit, '注册'
+        $.div className: 'button', onClick: @onSubmit, '注册新用户'

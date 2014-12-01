@@ -15,6 +15,7 @@ exports.patch = (diff) ->
     store = jiff.patch diff, store
     exports.trigger()
   catch err
+    console.warn 'preview patch error', err
     report.syncPreview()
 
 exports.sync = (data) ->

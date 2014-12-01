@@ -9,6 +9,7 @@ store = []
 
 exports.add = (info) ->
   store.unshift info
+  @emit()
 
 exports.remove = (id) ->
   store = store.filter (tip) -> tip.id isnt id

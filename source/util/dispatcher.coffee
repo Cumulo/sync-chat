@@ -13,3 +13,6 @@ module.exports =
 
   trigger: ->
     @listeners.forEach (cb) -> cb()
+
+  emit: ->
+    @listeners.forEach (cb) -> cb()

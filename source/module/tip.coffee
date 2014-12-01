@@ -16,4 +16,4 @@ module.exports = React.createFactory React.createClass
   render: ->
 
     $.div className: 'module-tip', onClick: @onClick,
-      @props.text
+      @props.data.text

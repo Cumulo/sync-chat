@@ -6,6 +6,7 @@
 
 /* module */
 @import url('module/button.css');
+@import url('module/tip.css');
 
 /* app */
 @import url('app/action-bar.css');
@@ -17,3 +18,4 @@
 @import url('app/message.css');
 @import url('app/profile.css');
 @import url('app/thread-list.css');
+@import url('app/tip-manager.css');
