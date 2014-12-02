@@ -28,7 +28,7 @@ time.interval 1000, ->
   # unmark change but notify clients the changes
   db.changed = no
   for sid, state of states
-    clients.patch sid
+    clients.patch sid if state?
 
 exports.get = ->
   world

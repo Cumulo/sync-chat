@@ -1,9 +1,16 @@
 
+# use session to recall last login
+session = require './store/session'
+
 local =
   ws: null
 
 exports.register = (ws) ->
   local.ws = ws
+
+  data = session.get()
+  if data.name? and data.password?
+    @login data.name, data.password
 
 exports.emit = (data) ->
   raw = JSON.stringify data
@@ -28,6 +35,7 @@ exports.login = (name, password) ->
     name: name
     password: password
   @emit data
+  session.set {name, password}
 
 exports.signup = (name, password) ->
   data =

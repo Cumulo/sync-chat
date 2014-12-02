@@ -23,7 +23,7 @@ module.exports = React.createFactory React.createClass
 
   render: ->
 
-    $.div className: 'app-signup',
+    $.div className: 'app-signup paragraph',
       $.input
         className: 'name', type: 'text'
         value: @state.name, placeholder: '用户名'

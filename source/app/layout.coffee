@@ -16,7 +16,7 @@ module.exports = React.createFactory React.createClass
   propTypes:
     store: React.PropTypes.object.isRequired
 
-  renderLogin: ->
+  renderAccountAction: ->
     $.div className: 'guest-page',
       AccountAction()
 
@@ -30,5 +30,5 @@ module.exports = React.createFactory React.createClass
     $.div className: 'app-layout',
       if @props.store?.user?
       then @renderMessage()
-      else @renderLogin()
+      else @renderAccountAction()
       TipManager()

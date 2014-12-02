@@ -31,6 +31,8 @@ wss.on 'connection', (ws) ->
   ws.on 'close', ->
     console.log 'socket close', sid
     sender.unregister sid
+    # force remove socket
+    states[sid] = null
 
   # decode data from messages
   ws.on 'message', (raw) ->

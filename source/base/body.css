@@ -5,5 +5,5 @@ body {
 
 body * {
   box-sizing: border-box;
-  box-shadow: 0 0 1px rgba(0, 0, 0, 0.38);
+  /* box-shadow: 0 0 1px rgba(0, 0, 0, 0.38); */
 }

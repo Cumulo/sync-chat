@@ -6,7 +6,6 @@ report = require './report'
 
 # start websocket
 ws = new WebSocket 'ws://localhost:3000'
-report.register ws
 
 ws.onmessage = (event) ->
   try
@@ -14,3 +13,6 @@ ws.onmessage = (event) ->
     deliver.handle data
   unless data?
     console.log 'parsing failed', data
+
+ws.onopen = ->
+  report.register ws
