@@ -1,6 +1,6 @@
 
 exports.now = ->
-  (new Date).toString()
+  (new Date).toISOString()
 
 exports.interval = (f, t) -> setInterval t, f
 exports.timeout = (f, t) -> setTimeout t, f

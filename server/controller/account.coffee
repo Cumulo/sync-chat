@@ -23,6 +23,7 @@ exports.signup = (sid, data) ->
     avatar: ''
     nickname: ''
     id: shortid.generate()
+    thread: 'default'
     online: yes
   db.users.unshift user
   state = states[sid]

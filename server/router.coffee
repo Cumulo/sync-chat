@@ -7,6 +7,9 @@ alter = require './controller/alter'
 hear = require './controller/hear'
 # state is special to be operated directly
 states = require './model/states'
+# view
+clients = require './view/clients'
+preview = require './view/preview'
 
 exports.handle = (sid, data) ->
   switch data.scope
@@ -25,6 +28,7 @@ exports.handle = (sid, data) ->
     when 'profile' then switch data.action
       when 'avatar'     then profile.avatar     sid, data
       when 'nickname'   then profile.nickname   sid, data
+      when 'setThread'  then profile.setThread  sid, data
       else console.warn 'not handled in profile', data
     # states that are not in db
     when 'state' then switch data.action
@@ -34,6 +38,13 @@ exports.handle = (sid, data) ->
     when 'whisper' then switch data.action
       when 'preview'  then hear.preview sid, data
       else console.warn 'not handled in whisper', data
+    # report clients failure
+    when 'clients' then switch data.action
+      when 'sync' then clients.sync sid
+      else console.warn 'not handled in clients', data
+    # report preview failure
+    when 'preview' then switch data.action
+      when 'sync' then preview.sync sid
     else console.warn 'not handled in router', data
 
 # above are the scope allowed from clients

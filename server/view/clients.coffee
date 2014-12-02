@@ -10,9 +10,9 @@ sender = require '../sender'
 world = require('../scene/world')
 
 render = (sid) ->
-  allThreads = world.get().threads or []
-  allMessages = world.get().messages[sid] or []
   state = states[sid]
+  allThreads = world.get().threads or []
+  allMessages = world.get().messages[state.user.thread] or []
   threadLen = state.threadPage * state.pageStep
   messageLen = state.messagePage * state.pageStep
   # generates store

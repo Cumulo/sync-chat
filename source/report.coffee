@@ -13,12 +13,12 @@ exports.register = (ws) ->
     @login data.name, data.password
 
 exports.emit = (data) ->
-  raw = JSON.stringify data
+  raw = JSON.stringify data, null, 2
   local.ws.send raw
 
 exports.syncStore = ->
   data =
-    scope: 'store'
+    scope: 'clients'
     action: 'sync'
   @emit data
 
@@ -43,4 +43,18 @@ exports.signup = (name, password) ->
     action: 'signup'
     name: name
     password: password
+  @emit data
+
+exports.submitPreview = (text) ->
+  data =
+    scope: 'whisper'
+    action: 'preview'
+    text: text
+  @emit data
+
+exports.submitText = (text) ->
+  data =
+    scope: 'message'
+    action: 'create'
+    text: text
   @emit data

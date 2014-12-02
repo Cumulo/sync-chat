@@ -9,13 +9,13 @@ curd = require '../util/curd'
 
 exports.create = (sid, data) ->
   state = states[sid]
-  {user, thread} = state
+  {user} = state
   msg =
     id: shortid.generate()
     time: time.now()
     userId: user.id
-    content: data.content
-    thread: thread
+    text: data.text
+    thread: user.thread
     isThread: no
   db.messages.unshift msg
   db.changed = yes

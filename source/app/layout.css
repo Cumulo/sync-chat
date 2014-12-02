@@ -19,10 +19,47 @@
     height: 100%;
 }
 
-.app-layout .thread-list,
-.app-layout .message-list {
+.app-layout .thread-wrap,
+.app-layout .message-wrap {
     flex: 1;
 }
+
+/* thread */
+
+.app-layout .thread-wrap {
+    display: flex;
+    flex-direction: column;
+}
+
+.app-layout .thread-wrap > .default-thread {
+    height: 100px;
+    padding: 1em;
+}
+
+.app-layout .thread-wrap > .thread-list {
+    flex: 1;
+    overflow: auto;
+}
+
+/* message */
+
+.app-layout .message-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}
+
+.app-layout .message-wrap > .message-list {
+    flex: 1;
+    overflow: auto;
+}
+
+.app-layout .message-wrap > .message-box {
+    height: 100px;
+}
+
+/* actions */
+
 
 .app-layout .action-bar {
     width: 80px;

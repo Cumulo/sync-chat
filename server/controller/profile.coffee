@@ -14,3 +14,8 @@ exports.nickname = (sid, data) ->
   {user} = states[sid]
   curd.updateOneById db.users, user.id, nickname: data.nickname
   db.changed = yes
+
+exports.setThread = (sid, data) ->
+  {user} = states[sid]
+  curd.updateOneById db.users, user.id, thread: data.thread
+  db.changed = yes

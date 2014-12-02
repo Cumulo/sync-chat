@@ -11,14 +11,14 @@ sender = require '../sender'
 # scene
 whispers = require('../scene/whispers')
 
-render = (sid) ->
-  whispers.get()[sid]
+render = (thread) ->
+  whispers.get()[thread]
 
 exports.patch = (sid) ->
   state = states[sid]
-  diff = jiff state.cachePreview, data
+  data = render state.user.thread
+  diff = jiff.diff state.cachePreview, data
   if diff?
-    data = render sid
     state.cachePreview = data
     sender.patchPreview sid, diff
 

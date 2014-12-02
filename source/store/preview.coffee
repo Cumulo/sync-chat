@@ -11,12 +11,8 @@ store = {}
 lodash.merge exports, dispatcher
 
 exports.patch = (diff) ->
-  try
-    store = jiff.patch diff, store
-    exports.trigger()
-  catch err
-    console.warn 'preview patch error', err
-    report.syncPreview()
+  store = jiff.patch diff, (store or {})
+  exports.trigger()
 
 exports.sync = (data) ->
   store = data

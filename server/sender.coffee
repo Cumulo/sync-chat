@@ -10,10 +10,10 @@ exports.unregister = (sid) ->
   collections[sid] = null
   delete collections[sid]
 
-exports.emit = (sid, data) ->
+exports.emit = (sid, data={}) ->
   ws = collections[sid]
   if ws?
-  then ws.send (JSON.stringify (data or {}))
+  then ws.send (JSON.stringify data, null, 2)
   else console.warn 'no ws for sid:', sid
 
 # actions

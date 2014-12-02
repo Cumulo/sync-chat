@@ -9,6 +9,7 @@ MessageList = require './message-list'
 ActionBar = require './action-bar'
 TipManager = require './tip-manager'
 AccountAction = require './account-action'
+MessageBox = require './message-box'
 
 module.exports = React.createFactory React.createClass
   displayName: 'app-layout'
@@ -22,8 +23,13 @@ module.exports = React.createFactory React.createClass
 
   renderMessage: ->
     $.div className: 'main-page',
-      ThreadList data: @props.store.threads
-      MessageList data: @props.store.messages
+      $.div className: 'thread-wrap',
+        $.div className: 'default-thread',
+          '欢迎来到聊天室, 这是一个测试版的聊天室'
+        ThreadList data: @props.store.threads
+      $.div className: 'message-wrap',
+        MessageList data: @props.store.messages
+        MessageBox()
       ActionBar data: @props.store.user
 
   render: ->
