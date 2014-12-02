@@ -12,7 +12,7 @@ module.exports =
       cb isnt f
 
   trigger: ->
-    @listeners.forEach (cb) -> cb()
+    @listeners?.forEach (cb) -> cb()
 
   emit: ->
-    @listeners.forEach (cb) -> cb()
+    @listeners?.forEach (cb) -> cb()

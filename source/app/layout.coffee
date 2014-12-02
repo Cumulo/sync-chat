@@ -22,9 +22,9 @@ module.exports = React.createFactory React.createClass
 
   renderMessage: ->
     $.div className: 'main-page',
-      ThreadList data: store.threads
-      MessageList data: store.messages
-      ActionBar data: store.user
+      ThreadList data: @props.store.threads
+      MessageList data: @props.store.messages
+      ActionBar data: @props.store.user
 
   render: ->
     $.div className: 'app-layout',

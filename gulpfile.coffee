@@ -6,6 +6,7 @@ dev = yes
 libraries = [
   'react'
   'shortid'
+  'jiff'
 ]
 
 gulp.task 'folder', ->

@@ -24,6 +24,7 @@ exports.patch = (sid) ->
   state = states[sid]
   data = render sid
   diff = jiff.diff state.cacheStore, data
+  # console.log 'client store diff:', diff, state.cacheStore, data
   if diff?
     state.cacheStore = data
     sender.patchStore sid, diff

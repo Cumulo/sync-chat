@@ -22,11 +22,14 @@ wss.on 'connection', (ws) ->
     threadPage: 1
     messagePage: 1
     pageStep: 10
+    cacheStore: {}
+    cachePreview: {}
   whispers.typing[sid] = {}
 
   # so sender can send messages directly
   sender.register sid, ws
   ws.on 'close', ->
+    console.log 'socket close', sid
     sender.unregister sid
 
   # decode data from messages
