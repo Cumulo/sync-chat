@@ -14,14 +14,14 @@ world = {}
 render = ->
   byThread = (data) -> data.thread
   getText = (whisper) -> whisper.text
-  byTime = (p) -> new Date p.time
+  byTime = (p) -> (new Date p.time).valueOf()
   # preview is like {thread, time, text, sid}
   data = lodash.groupBy whispers.typing, byThread
   for thread, list of data
     data[thread] = prelude.sortBy byTime, list
   world = data
 
-time.interval 800, ->
+time.interval 400, ->
   unless whispers.changed
     return
   render()

@@ -8,11 +8,8 @@ report = require './report'
 ws = new WebSocket 'ws://localhost:3000'
 
 ws.onmessage = (event) ->
-  try
-    data = JSON.parse event.data
-    deliver.handle data
-  unless data?
-    console.log 'parsing failed', data
+  data = JSON.parse event.data
+  deliver.handle data
 
 ws.onopen = ->
   report.register ws

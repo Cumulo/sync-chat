@@ -5,14 +5,12 @@ db = require '../model/db'
 # util
 curd = require '../util/curd'
 
-exports.avatar = (sid, data) ->
+exports.update = (sid, obj) ->
   {user} = states[sid]
-  curd.updateOneById db.users, user.id, avatar: data.avatar
-  db.changed = yes
-
-exports.nickname = (sid, data) ->
-  {user} = states[sid]
-  curd.updateOneById db.users, user.id, nickname: data.nickname
+  data =
+    nickname: obj.nickname
+    avatar: obj.avatar
+  curd.updateOneById db.users, user.id, data
   db.changed = yes
 
 exports.setThread = (sid, data) ->

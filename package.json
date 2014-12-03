@@ -33,7 +33,7 @@
   },
   "description": "A chat app",
   "dependencies": {
-    "jiff": "^0.6.0",
+    "jsondiffpatch": "^0.1.20",
     "lodash": "^2.4.1",
     "prelude-ls": "^1.1.1",
     "shortid": "^2.1.3",

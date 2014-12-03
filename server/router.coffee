@@ -26,8 +26,7 @@ exports.handle = (sid, data) ->
       else console.warn 'not handled in message', data
     # profile
     when 'profile' then switch data.action
-      when 'avatar'     then profile.avatar     sid, data
-      when 'nickname'   then profile.nickname   sid, data
+      when 'update'     then profile.update     sid, data
       when 'setThread'  then profile.setThread  sid, data
       else console.warn 'not handled in profile', data
     # states that are not in db

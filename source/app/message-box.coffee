@@ -11,7 +11,7 @@ module.exports = React.createFactory React.createClass
     text: ''
 
   onTextChange: (event) ->
-    text = event.target.value.trimRight()
+    text = event.target.value
     @setState text: text
     report.submitPreview text
 
@@ -21,6 +21,7 @@ module.exports = React.createFactory React.createClass
 
   onTextKeydown: (event) ->
     if event.keyCode is 13 # return
+      event.preventDefault()
       @onTextSubmit()
 
   render: ->

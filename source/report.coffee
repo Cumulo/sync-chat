@@ -17,44 +17,45 @@ exports.emit = (data) ->
   local.ws.send raw
 
 exports.syncStore = ->
-  data =
+  @emit
     scope: 'clients'
     action: 'sync'
-  @emit data
 
 exports.syncPreview = ->
-  data =
+  @emit
     scope: 'preview'
     action: 'sync'
-  @emit data
 
 exports.login = (name, password) ->
-  data =
+  @emit
     scope: 'account'
     action: 'login'
     name: name
     password: password
-  @emit data
   session.set {name, password}
 
 exports.signup = (name, password) ->
-  data =
+  @emit
     scope: 'account'
     action: 'signup'
     name: name
     password: password
-  @emit data
 
 exports.submitPreview = (text) ->
-  data =
+  @emit
     scope: 'whisper'
     action: 'preview'
     text: text
-  @emit data
 
 exports.submitText = (text) ->
-  data =
+  @emit
     scope: 'message'
     action: 'create'
     text: text
-  @emit data
+
+exports.updateProfile = (data) ->
+  @emit
+    scope: 'profile'
+    action: 'update'
+    nickname: data.nickname
+    avatar: data.avatar

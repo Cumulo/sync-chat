@@ -26,13 +26,15 @@ wss.on 'connection', (ws) ->
     cachePreview: {}
   whispers.typing[sid] = {}
 
+  console.info 'socket opened', sid
+
   # so sender can send messages directly
   sender.register sid, ws
   ws.on 'close', ->
-    console.log 'socket close', sid
     sender.unregister sid
     # force remove socket
     states[sid] = null
+    console.info 'socket closed', sid
 
   # decode data from messages
   ws.on 'message', (raw) ->

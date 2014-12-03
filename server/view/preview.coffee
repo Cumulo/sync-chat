@@ -1,7 +1,7 @@
 
 lodash = require 'lodash'
 prelude = require 'prelude-ls'
-jiff = require 'jiff'
+jsondiffpatch = require 'jsondiffpatch'
 # model
 states = require '../model/states'
 # util
@@ -12,12 +12,12 @@ sender = require '../sender'
 whispers = require('../scene/whispers')
 
 render = (thread) ->
-  whispers.get()[thread]
+  text: whispers.get()[thread]
 
 exports.patch = (sid) ->
   state = states[sid]
   data = render state.user.thread
-  diff = jiff.diff state.cachePreview, data
+  diff = jsondiffpatch.diff state.cachePreview, data
   if diff?
     state.cachePreview = data
     sender.patchPreview sid, diff

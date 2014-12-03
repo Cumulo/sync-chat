@@ -1,5 +1,5 @@
 
-jiff = require 'jiff'
+jsondiffpatch = require 'jsondiffpatch'
 # util
 time = require '../util/time'
 # model
@@ -23,8 +23,7 @@ render = (sid) ->
 exports.patch = (sid) ->
   state = states[sid]
   data = render sid
-  diff = jiff.diff state.cacheStore, data
-  # console.log 'client store diff:', diff, state.cacheStore, data
+  diff = jsondiffpatch.diff state.cacheStore, data
   if diff?
     state.cacheStore = data
     sender.patchStore sid, diff

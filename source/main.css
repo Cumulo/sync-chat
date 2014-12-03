@@ -5,18 +5,21 @@
 @import url('base/spaces.css');
 
 /* module */
-@import url('module/button.css');
-@import url('module/tip.css');
+@import url('module/css/button.css');
+@import url('module/css/tip.css');
+@import url('module/css/modal.css');
 
 /* app */
-@import url('app/action-bar.css');
-@import url('app/account-action.css');
-@import url('app/layout.css');
-@import url('app/login.css');
-@import url('app/signup.css');
-@import url('app/message-list.css');
-@import url('app/message.css');
-@import url('app/message-box.css');
-@import url('app/profile.css');
-@import url('app/thread-list.css');
-@import url('app/tip-manager.css');
+@import url('app/css/action-bar.css');
+@import url('app/css/avatar.css');
+@import url('app/css/account-action.css');
+@import url('app/css/layout.css');
+@import url('app/css/login.css');
+@import url('app/css/signup.css');
+@import url('app/css/message-list.css');
+@import url('app/css/message.css');
+@import url('app/css/message-box.css');
+@import url('app/css/profile.css');
+@import url('app/css/thread-list.css');
+@import url('app/css/tip-manager.css');
+@import url('app/css/avatar-config.css');

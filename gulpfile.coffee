@@ -6,7 +6,7 @@ dev = yes
 libraries = [
   'react'
   'shortid'
-  'jiff'
+  'jsondiffpatch'
   'flux'
 ]
 

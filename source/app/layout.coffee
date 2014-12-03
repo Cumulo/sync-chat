@@ -30,7 +30,7 @@ module.exports = React.createFactory React.createClass
       $.div className: 'message-wrap',
         MessageList data: @props.store.messages
         MessageBox()
-      ActionBar data: @props.store.user
+      ActionBar user: @props.store.user
 
   render: ->
     $.div className: 'app-layout',

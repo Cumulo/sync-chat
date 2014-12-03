@@ -14,13 +14,28 @@ world =
   threads: [] # just messages
   messages: {} # by roomId
 
-render = ->
-  isThread = (msg) -> msg.isThread
-  getThread = (msg) -> msg.thread
-  world.threads = prelude.filter isThread, db.messages
-  world.messages = prelude.groupBy getThread, db.messages
+exports.get = ->
+  world
 
-time.interval 1000, ->
+# render threads and messages
+isThread = (msg) -> msg.isThread
+getThread = (msg) -> msg.thread
+
+render = ->
+  fillUser = (msg) ->
+    matchUser = (user) -> user.id is msg.userId
+    msg.user = lodash.find db.users, matchUser
+    msg
+  threads = lodash.cloneDeep (prelude.filter isThread, db.messages)
+  groups = prelude.groupBy getThread, db.messages
+  for thread, messages of groups
+    groups[thread] = lodash.cloneDeep(messages).map fillUser
+
+  world.threads = threads.map fillUser
+  world.messages = groups
+
+# start time loop
+time.interval 800, ->
   unless db.changed
     return
   console.info 'render world'
@@ -29,6 +44,3 @@ time.interval 1000, ->
   db.changed = no
   for sid, state of states
     clients.patch sid if state?
-
-exports.get = ->
-  world
