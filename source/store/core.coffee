@@ -1,26 +1,22 @@
 
 lodash = require 'lodash'
 jiff = require 'jiff'
-# util
-dispatcher = require '../util/dispatcher'
+flux = require 'flux'
 # report
 report = require '../report'
 
 store = {}
 
-lodash.merge exports, dispatcher
+module.exports = new flux.Dispatcher
+lodash.merge module.exports,
 
-exports.patch = (diff) ->
-  try
+  patch: (diff) ->
     store = jiff.patch diff, store
-    exports.trigger()
-  catch err
-    console.warn 'store patch error'
-    report.syncPreview()
+    @dispatch()
 
-exports.sync = (data) ->
-  store = data
-  exports.trigger()
+  sync: (data) ->
+    store = data
+    @dispatch()
 
-exports.get = ->
-  store or null
+  get: ->
+    store or null

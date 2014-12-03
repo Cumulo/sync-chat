@@ -7,6 +7,7 @@ libraries = [
   'react'
   'shortid'
   'jiff'
+  'flux'
 ]
 
 gulp.task 'folder', ->

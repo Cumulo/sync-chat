@@ -26,5 +26,5 @@ render = ->
   component = AppLayout store: store.get()
   React.render component, document.body
 
-store.on render
+store.register render
 render()

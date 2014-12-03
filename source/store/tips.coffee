@@ -1,19 +1,20 @@
 
 lodash = require 'lodash'
-
-dispatcher = require '../util/dispatcher'
-
-lodash.merge exports, dispatcher
+flux = require 'flux'
 
 store = []
 
-exports.add = (info) ->
-  store.unshift info
-  @emit()
+module.exports = new flux.Dispatcher
 
-exports.remove = (id) ->
-  store = store.filter (tip) -> tip.id isnt id
-  @emit()
+lodash.merge module.exports,
 
-exports.get = ->
-  store
+  add: (info) ->
+    store.unshift info
+    @dispatch()
+
+  remove: (id) ->
+    store = store.filter (tip) -> tip.id isnt id
+    @dispatch()
+
+  get: ->
+    store
