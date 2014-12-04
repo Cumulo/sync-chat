@@ -17,6 +17,7 @@ exports.handle = (sid, data) ->
     when 'account' then switch data.action
       when 'signup'   then account.signup   sid, data
       when 'login'    then account.login    sid, data
+      when 'logout'   then account.logout   sid, data
       when 'change'   then account.change   sid, data
       else console.warn 'not handled in account', data
     # message

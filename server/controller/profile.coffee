@@ -6,14 +6,14 @@ db = require '../model/db'
 curd = require '../util/curd'
 
 exports.update = (sid, obj) ->
-  {user} = states[sid]
+  state = states[sid]
   data =
     nickname: obj.nickname
     avatar: obj.avatar
-  curd.updateOneById db.users, user.id, data
+  curd.updateOneById db.users, state.userId, data
   db.changed = yes
 
 exports.setThread = (sid, data) ->
-  {user} = states[sid]
-  curd.updateOneById db.users, user.id, thread: data.thread
+  state = states[sid]
+  curd.updateOneById db.users, state.userId, thread: data.thread
   db.changed = yes

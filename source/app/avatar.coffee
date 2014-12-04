@@ -8,8 +8,8 @@ module.exports = React.createFactory React.createClass
   displayName: 'app-avatar'
 
   propTypes:
+    data: T.object
     size: T.number
-    url: T.string
     onClick: T.func
 
   onClick: ->
@@ -19,8 +19,9 @@ module.exports = React.createFactory React.createClass
     style =
       width: "#{@props.size}px"
       height: "#{@props.size}px"
-      backgroundImage: "url('#{@props.url}')"
+      backgroundImage: "url('#{@props.data.avatar}')"
     $.div
       className: 'app-avatar'
       style: style
       onClick: @onClick
+      title: @props.data.nickname

@@ -1,5 +1,6 @@
 
 jsondiffpatch = require 'jsondiffpatch'
+prelude = require 'prelude-ls'
 # util
 time = require '../util/time'
 # model
@@ -9,21 +10,32 @@ sender = require '../sender'
 # world provides data that is pre-rendered
 world = require('../scene/world')
 
+diffpatch = jsondiffpatch.create
+  objectHash: (obj) -> obj.id
+
 render = (sid) ->
   state = states[sid]
-  allThreads = world.get().threads or []
-  allMessages = world.get().messages[state.user.thread] or []
-  threadLen = state.threadPage * state.pageStep
-  messageLen = state.messagePage * state.pageStep
-  # generates store
-  user: state.user
-  threads: allThreads[...threadLen]
-  messages: allMessages[...messageLen]
+  if state.userId?
+    matchId = (obj) -> obj.id is state.userId
+    user = prelude.find matchId, world.get().users
+    allThreads = world.get().threads or []
+    allMessages = world.get().messages[user.thread] or []
+    threadLen = state.threadPage * state.pageStep
+    messageLen = state.messagePage * state.pageStep
+    # generates store
+    user: user
+    threads: allThreads[...threadLen]
+    messages: allMessages[...messageLen]
+  else
+    # empty
+    user: null
+    threads: []
+    messages: []
 
 exports.patch = (sid) ->
   state = states[sid]
   data = render sid
-  diff = jsondiffpatch.diff state.cacheStore, data
+  diff = diffpatch.diff state.cacheStore, data
   if diff?
     state.cacheStore = data
     sender.patchStore sid, diff

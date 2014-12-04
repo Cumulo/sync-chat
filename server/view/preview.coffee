@@ -10,14 +10,20 @@ time = require '../util/time'
 sender = require '../sender'
 # scene
 whispers = require('../scene/whispers')
+world = require '../scene/world'
+
+diffpatch = jsondiffpatch.create
+  objectHash: (obj) -> obj.id
 
 render = (thread) ->
   text: whispers.get()[thread]
 
 exports.patch = (sid) ->
   state = states[sid]
-  data = render state.user.thread
-  diff = jsondiffpatch.diff state.cachePreview, data
+  matchId = (obj) -> obj.id is state.userId
+  user = prelude.find matchId, world.get().users
+  data = render user.thread
+  diff = diffpatch.diff state.cachePreview, data
   if diff?
     state.cachePreview = data
     sender.patchPreview sid, diff

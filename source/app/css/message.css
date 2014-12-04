@@ -1,0 +1,10 @@
+
+.app-message {
+    display: flex;
+    flex-direction: row;
+    padding: 10px;
+}
+
+.app-message .app-avatar {
+    margin: 0 10px;
+}

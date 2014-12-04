@@ -1,6 +1,8 @@
 
 React = require 'react'
 
+AppAvatar = require './avatar'
+
 $ = React.DOM
 
 module.exports = React.createFactory React.createClass
@@ -12,4 +14,12 @@ module.exports = React.createFactory React.createClass
   render: ->
 
     $.div className: 'app-message',
-      @props.data.text
+      AppAvatar
+        data: @props.data.user
+        size: 32, onClick: ->
+      $.div className: 'body',
+        $.div className: 'line',
+          @props.data.user.nickname
+          @props.data.time
+        $.div className: 'content',
+          @props.data.text

@@ -34,12 +34,21 @@ exports.login = (name, password) ->
     password: password
   session.set {name, password}
 
+exports.logout = ->
+  @emit
+    scope: 'account'
+    action: 'logout'
+  session.set
+    name: null
+    password: null
+
 exports.signup = (name, password) ->
   @emit
     scope: 'account'
     action: 'signup'
     name: name
     password: password
+  session.set {name, password}
 
 exports.submitPreview = (text) ->
   @emit

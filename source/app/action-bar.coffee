@@ -5,6 +5,8 @@ AppAvatar = require './avatar'
 ModuleModal = require '../module/modal'
 AvatarConfig = require './avatar-config'
 
+report = require '../report'
+
 $ = React.DOM
 T = React.PropTypes
 
@@ -20,6 +22,9 @@ module.exports = React.createFactory React.createClass
   onAvatarClick: -> @setState showConfig: yes
   onConfigClose: -> @setState showConfig: false
 
+  onLogoutClick: ->
+    report.logout()
+
   # render methods
 
   renderAvatarConfig: ->
@@ -29,7 +34,12 @@ module.exports = React.createFactory React.createClass
   render: ->
 
     $.div className: 'action-bar',
-      AppAvatar url: @props.user.avatar, size: 64, onClick: @onAvatarClick
+      AppAvatar
+        data: @props.user, size: 64
+        onClick: @onAvatarClick
+
+      $.div className: 'button', onClick: @onLogoutClick,
+        '注销'
 
       # mount modals
       if @state.showConfig
