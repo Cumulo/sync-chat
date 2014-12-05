@@ -7,6 +7,7 @@ states = require '../model/states'
 # util
 time = require '../util/time'
 orders = require '../util/orders'
+filters = require '../util/filters'
 # view
 clients = require '../view/clients'
 
@@ -23,16 +24,18 @@ isThread = (msg) -> msg.isThread
 getThread = (msg) -> msg.thread
 
 render = ->
-  fillUser = (msg) ->
-    matchUser = (user) -> user.id is msg.userId
-    msg.user = lodash.cloneDeep (lodash.find db.users, matchUser)
-    msg
+  users = lodash.cloneDeep db.users
+  messages = lodash.cloneDeep db.messages
   threads = lodash.cloneDeep (prelude.filter isThread, db.messages)
-  groups = prelude.groupBy getThread, db.messages
-  for thread, messages of groups
-    groups[thread] = lodash.cloneDeep(messages).map(fillUser).sort(orders)
+  fillUser = (msg) ->
+    msg.user = prelude.find (filters.matchId msg.userId), users
+    msg
+  groups = prelude.groupBy getThread, messages
+  for thread, list of groups
+    list.forEach fillUser
+    groups[thread] = list.sort(orders.timeReverse)
 
-  world.threads = threads.map(fillUser).sort(orders.time)
+  world.threads = threads.map(fillUser).sort(orders.timeReverse)
   world.messages = groups
   world.users = lodash.cloneDeep db.users
 

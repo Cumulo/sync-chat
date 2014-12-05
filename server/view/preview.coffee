@@ -6,6 +6,7 @@ jsondiffpatch = require 'jsondiffpatch'
 states = require '../model/states'
 # util
 time = require '../util/time'
+filters = require '../util/filters'
 # browser interface
 sender = require '../sender'
 # scene
@@ -20,10 +21,11 @@ render = (thread) ->
 
 exports.patch = (sid) ->
   state = states[sid]
-  matchId = (obj) -> obj.id is state.userId
-  user = prelude.find matchId, world.get().users
+  users = world.get().users
+  user = prelude.find (filters.matchId state.userId), users
   data = render user.thread
   diff = diffpatch.diff state.cachePreview, data
+  console.log JSON.stringify(diff, null, 2)
   if diff?
     state.cachePreview = data
     sender.patchPreview sid, diff

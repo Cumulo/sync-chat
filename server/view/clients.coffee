@@ -3,6 +3,7 @@ jsondiffpatch = require 'jsondiffpatch'
 prelude = require 'prelude-ls'
 # util
 time = require '../util/time'
+filters = require '../util/filters'
 # model
 states = require '../model/states'
 # browser interface
@@ -15,22 +16,22 @@ diffpatch = jsondiffpatch.create
 
 render = (sid) ->
   state = states[sid]
-  if state.userId?
-    matchId = (obj) -> obj.id is state.userId
-    user = prelude.find matchId, world.get().users
-    allThreads = world.get().threads or []
-    allMessages = world.get().messages[user.thread] or []
-    threadLen = state.threadPage * state.pageStep
-    messageLen = state.messagePage * state.pageStep
-    # generates store
-    user: user
-    threads: allThreads[...threadLen]
-    messages: allMessages[...messageLen]
-  else
-    # empty
-    user: null
-    threads: []
-    messages: []
+  userId = state.userId
+  unless userId?
+    # nothing to render when not logined
+    return {}
+  users = world.get().users
+  user = prelude.find (filters.matchId userId), users
+  allThreads = world.get().threads or []
+  allMessages = world.get().messages[user.thread] or []
+  threadLen = state.threadPage * state.pageStep
+  messageLen = state.messagePage * state.pageStep
+  console.log world.get().messages
+  console.log allMessages.map (x) -> x.time
+  # generates store
+  user: user
+  threads: allThreads[...threadLen]
+  messages: allMessages[...messageLen]
 
 exports.patch = (sid) ->
   state = states[sid]

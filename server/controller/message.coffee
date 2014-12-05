@@ -1,19 +1,21 @@
 
 shortid = require 'shortid'
+prelude = require 'prelude-ls'
 # model
 states = require '../model/states'
 db = require '../model/db'
 # utils
 time = require '../util/time'
 curd = require '../util/curd'
+filters = require '../util/filters'
 
 exports.create = (sid, data) ->
-  state = states[sid]
-  {user} = state
+  userId = states[sid].userId
+  user = prelude.find (filters.matchId userId) db.users
   msg =
     id: shortid.generate()
     time: time.now()
-    userId: user.id
+    userId: userId
     text: data.text
     thread: user.thread
     isThread: no

@@ -42,14 +42,14 @@ exports.login = (sid, data) ->
   user = prelude.find matchName, db.users
   user.online = yes
   state = states[sid]
-  lodash.merge state, {userId: user.id, changed: yes}
+  lodash.assign state, {userId: user.id, changed: yes}
   db.changed = yes
 
 exports.logout = (sid, data) ->
   state = states[sid]
   {user} = state
   curd.updateOneById db.users, user.id, online: no
-  lodash.merge state, user: null, changed: yes
+  lodash.assign state, user: null, changed: yes
   db.changed = yes
 
 exports.change = (sid, data) ->
