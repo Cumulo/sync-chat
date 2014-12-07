@@ -2,6 +2,7 @@
 React = require 'react'
 
 AppMessage = require './message'
+AppTyping = require './typing'
 orders = require '../util/orders'
 preview = require '../store/preview'
 
@@ -14,7 +15,7 @@ module.exports = React.createFactory React.createClass
     data: React.PropTypes.array
 
   getInitialState: ->
-    preview: store.get()
+    preview: preview.get().typing
 
   componentWillUpdate: ->
     @_atBottom = @isScrollAtBottom()
@@ -46,19 +47,20 @@ module.exports = React.createFactory React.createClass
   # event listener
 
   onPreviewUpdate: ->
-    @setState preview: preview.get()
+    @setState preview: preview.get().typing
 
   # render methods
 
   renderMessages: ->
-    @props.data
+    @props.data.concat()
     .sort orders.time
     .map (message) =>
       AppMessage key: message.id, data: message
 
   renderPreview: ->
-    @state.preview
-    .sort orders.time
+    @state.preview?.concat()
+    .map (obj) =>
+      AppTyping key: obj.sid, data: obj
 
   render: ->
 

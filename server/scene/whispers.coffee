@@ -16,7 +16,7 @@ world = {}
 # methods
 byThread = (data) -> data.thread
 getText = (whisper) -> whisper.text
-byTime = (p) -> (new Date p.time).valueOf()
+byTime = (p) -> (new Date p.textTime).valueOf()
 
 render = ->
   users = lodash.cloneDeep db.users
@@ -24,8 +24,9 @@ render = ->
   typing = {}
   lodash.each whispers.typing, (typingState, sid) ->
     state = states[sid]
-    if state?
-      typing[sid] = obj = lodash.cloneDeep typingState
+    obj = lodash.cloneDeep typingState
+    if state? and (obj.text.trim().length > 0)
+      typing[sid] = obj
       obj.id = sid
       {userId} = state
       obj.user = prelude.find (filters.matchId userId), users

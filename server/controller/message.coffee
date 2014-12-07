@@ -11,7 +11,8 @@ filters = require '../util/filters'
 
 exports.create = (sid, data) ->
   userId = states[sid].userId
-  user = prelude.find (filters.matchId userId) db.users
+  user = prelude.find (filters.matchId userId), db.users
+  console.log states[sid], user
   msg =
     id: shortid.generate()
     time: time.now()

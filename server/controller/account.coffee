@@ -27,8 +27,7 @@ exports.signup = (sid, data) ->
     online: yes
   db.users.unshift user
   state = states[sid]
-  state.userId = user.id
-  state.changed
+  lodash.assign state, userId: user.id, changed: yes
   db.changed = yes
 
 exports.login = (sid, data) ->
@@ -49,7 +48,7 @@ exports.logout = (sid, data) ->
   state = states[sid]
   {user} = state
   curd.updateOneById db.users, user.id, online: no
-  lodash.assign state, user: null, changed: yes
+  lodash.assign state, userId: null, changed: yes
   db.changed = yes
 
 exports.change = (sid, data) ->

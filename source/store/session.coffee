@@ -21,7 +21,7 @@ window.onbeforeunload = ->
 # expose API
 
 exports.set = (data) ->
-  lodash.merge session, data
+  lodash.assign session, data
 
 exports.get = ->
   session

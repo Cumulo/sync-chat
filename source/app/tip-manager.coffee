@@ -14,10 +14,10 @@ module.exports = React.createFactory React.createClass
     data: tipsStore.get()
 
   componentDidMount: ->
-    @_listener = tipsStore.register @onChange
+    tipsStore.on @onChange
 
   componentWillUnmount: ->
-    tipsStore.unregister @_listener
+    tipsStore.off @onChange
 
   onChange: ->
     @setState data: tipsStore.get()

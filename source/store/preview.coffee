@@ -1,22 +1,21 @@
 
 lodash = require 'lodash'
 jsondiffpatch = require 'jsondiffpatch'
-flux = require 'flux'
 # report
 report = require '../report'
+emitter = require '../util/emitter'
 
 store = {}
 
-module.exports = new flux.Dispatcher
-lodash.merge module.exports,
+lodash.assign exports, emitter,
 
   patch: (diff) ->
     store = jsondiffpatch.patch (store or {}), diff
-    @dispatch()
+    @emit()
 
   sync: (data) ->
     store = data
-    @dispatch()
+    @emit()
 
   get: ->
     store

@@ -26,8 +26,6 @@ render = (sid) ->
   allMessages = world.get().messages[user.thread] or []
   threadLen = state.threadPage * state.pageStep
   messageLen = state.messagePage * state.pageStep
-  console.log world.get().messages
-  console.log allMessages.map (x) -> x.time
   # generates store
   user: user
   threads: allThreads[...threadLen]

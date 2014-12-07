@@ -17,7 +17,7 @@ diffpatch = jsondiffpatch.create
   objectHash: (obj) -> obj.id
 
 render = (thread) ->
-  text: whispers.get()[thread]
+  typing: whispers.get()[thread] or []
 
 exports.patch = (sid) ->
   state = states[sid]
@@ -25,7 +25,6 @@ exports.patch = (sid) ->
   user = prelude.find (filters.matchId state.userId), users
   data = render user.thread
   diff = diffpatch.diff state.cachePreview, data
-  console.log JSON.stringify(diff, null, 2)
   if diff?
     state.cachePreview = data
     sender.patchPreview sid, diff
