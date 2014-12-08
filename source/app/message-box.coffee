@@ -17,6 +17,7 @@ module.exports = React.createFactory React.createClass
 
   onTextSubmit: ->
     report.submitText @state.text
+    report.submitPreview ''
     @setState text: ''
 
   onTextKeydown: (event) ->

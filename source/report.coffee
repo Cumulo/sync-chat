@@ -68,3 +68,20 @@ exports.updateProfile = (data) ->
     action: 'update'
     nickname: data.nickname
     avatar: data.avatar
+
+exports.setThread = (messageId) ->
+  @emit
+    scope: 'message'
+    action: 'setThread'
+    id: messageId
+
+exports.alterThread = (id) ->
+  @emit
+    scope: 'profile'
+    action: 'setThread'
+    thread: id
+
+exports.morePage = ->
+  @emit
+    scope: 'state'
+    action: 'morePage'

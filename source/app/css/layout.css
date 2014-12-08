@@ -29,16 +29,21 @@
 .app-layout .thread-wrap {
     display: flex;
     flex-direction: column;
+    overflow: auto;
 }
 
 .app-layout .thread-wrap > .default-thread {
-    height: 100px;
+    height: 60px;
     padding: 1em;
+    cursor: pointer;
+}
+
+.default-thread:hover {
+    background: rgb(242, 242, 242);
 }
 
 .app-layout .thread-wrap > .thread-list {
     flex: 1;
-    overflow: auto;
 }
 
 /* message */
@@ -47,6 +52,7 @@
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    border-left: 1px solid rgb(231, 231, 231);
 }
 
 .app-layout .message-wrap > .message-list {
@@ -68,4 +74,8 @@
     justify-content: space-around;
     flex-direction: column;
     align-items: center;
+}
+
+.app-layout .is-inside {
+    background: rgb(248, 235, 255);
 }

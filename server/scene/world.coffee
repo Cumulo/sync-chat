@@ -40,7 +40,7 @@ render = ->
   world.users = lodash.cloneDeep db.users
 
 # start time loop
-time.interval 800, ->
+time.interval 200, ->
   unless db.changed
     return
   console.info 'render world'

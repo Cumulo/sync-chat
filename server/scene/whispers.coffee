@@ -25,7 +25,7 @@ render = ->
   lodash.each whispers.typing, (typingState, sid) ->
     state = states[sid]
     obj = lodash.cloneDeep typingState
-    if state? and (obj.text.trim().length > 0)
+    if state? and (obj.text?.trim().length > 0)
       typing[sid] = obj
       obj.id = sid
       {userId} = state
@@ -35,7 +35,7 @@ render = ->
   lodash.each world, (list, thread) ->
     world[thread] = prelude.sortBy byTime, list
 
-time.interval 400, ->
+time.interval 100, ->
   unless whispers.changed
     return
   render()

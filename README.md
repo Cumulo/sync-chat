@@ -2,7 +2,8 @@
 Sync Chat
 ----
 
-A chat demo built with jiff.
+This is a chat demo built with Cumulo architechture.
+https://github.com/facebook/flux/issues/105
 
 ### License
 

@@ -20,6 +20,6 @@ module.exports = React.createFactory React.createClass
       $.div className: 'body',
         $.div className: 'line',
           @props.data.user.nickname
-          @props.data.textTime
+          $.span className: 'time', @props.data.textTime
         $.div className: 'content',
           @props.data.text

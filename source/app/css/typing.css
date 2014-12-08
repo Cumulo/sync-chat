@@ -9,3 +9,8 @@
 .app-typing .app-avatar {
     margin: 0 10px;
 }
+
+.app-typing .time {
+    font-size: 12px;
+    color: rgb(179, 179, 179);
+}

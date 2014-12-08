@@ -9,5 +9,10 @@ preview = require '../view/preview'
 exports.update = (sid, data) ->
   state = states[sid]
   lodash.merge state, data
-  clients.syncClient sid
-  preview.syncClient sid
+  clients.patch sid
+  preview.patch sid
+
+exports.morePage = (sid, data) ->
+  state = states[sid]
+  state.messagePage += 1
+  clients.patch sid

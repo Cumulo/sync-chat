@@ -9,6 +9,7 @@ states = require '../model/states'
 db = require '../model/db'
 # util
 curd = require '../util/curd'
+filters = require '../util/filters'
 
 exports.signup = (sid, data) ->
   if data.name is ''
@@ -46,8 +47,7 @@ exports.login = (sid, data) ->
 
 exports.logout = (sid, data) ->
   state = states[sid]
-  {user} = state
-  curd.updateOneById db.users, user.id, online: no
+  curd.updateOneById db.users, state.userId, online: no
   lodash.assign state, userId: null, changed: yes
   db.changed = yes
 

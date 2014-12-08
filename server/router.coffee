@@ -32,7 +32,8 @@ exports.handle = (sid, data) ->
       else console.warn 'not handled in profile', data
     # states that are not in db
     when 'state' then switch data.action
-      when 'update'       then alter.merge sid, data
+      when 'update'       then alter.merge    sid, data
+      when 'morePage'     then alter.morePage sid, data
       else console.warn 'not handled in alter', data
     # preview whispers
     when 'whisper' then switch data.action
